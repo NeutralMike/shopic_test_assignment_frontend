@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import CssBaseline from '@mui/material/CssBaseline';
 import App from './App';
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom';

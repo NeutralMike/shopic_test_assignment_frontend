@@ -1,15 +1,18 @@
 import { applyMiddleware, combineReducers, createStore, Store } from 'redux';
 import thunk from 'redux-thunk';
 import { ICartsState, cartsReducer } from '../reducers/cartsReducer';
+import { IAuthState, authReducer } from '../reducers/authReducer';
 
 
 export interface IAppState {
-  cartsState: ICartsState
+  cartsState: ICartsState,
+  authState: IAuthState
 }
 
 
 const rootReducer = combineReducers<IAppState>({
-  cartsState: cartsReducer
+  cartsState: cartsReducer,
+  authState: authReducer
 });
 
 

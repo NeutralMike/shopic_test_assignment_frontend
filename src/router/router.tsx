@@ -1,13 +1,20 @@
-import PublicRouter from './public';
-import PrivateRouter from './private';
+import PrivateRoute from './private';
+import { BrowserRouter, Switch } from 'react-router-dom';
+import { Route } from "react-router-dom";
+import LoginPage from '../pages/loginPage';
+import HomePage from '../pages/homePage';
 
 function Router() {
 
   return (
-    <div>
-      <PublicRouter/>
-      <PrivateRouter/>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/login" exact component={LoginPage} />
+        <PrivateRoute path="/">
+          <HomePage/>
+      </PrivateRoute>
+      </Switch>
+    </BrowserRouter>
   );
 }
 

@@ -29,9 +29,7 @@ export const LoadCartsAction: ActionCreator<ThunkAction<Promise<any>, ICartsStat
   return async (dispatch: Dispatch) => {
     dispatch(loadCartsStarted());
     try {
-      console.log('ok');
-      let result = await fetch(`http://127.0.0.1:8000/api/carts/`, {credentials: 'same-origin'});
-      console.log(result);
+      let result = await fetch(`http://127.0.0.1:8000/api/carts/`, {credentials: 'include'});
       if (result.status !== 200)
         throw new Error();
       dispatch(loadCartsSuccess(await result.json()));

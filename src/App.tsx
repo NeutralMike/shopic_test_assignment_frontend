@@ -1,18 +1,24 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { LoadCartsAction } from './actions/cartsActions';
+import { AuthCheckAction } from './actions/authActions';
 
 import Router from './router/router';
+import { IAppState } from './store/store';
 
 
 function App() {
+  const isAuthed = useSelector((state: IAppState) => state.authState.isAuthed);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('loadCarts')
-    dispatch(LoadCartsAction())
+    dispatch(AuthCheckAction());
   }, [])
+
+  useEffect(() => {
+    dispatch(LoadCartsAction());
+  }, [isAuthed])
 
   return (
     <div>
