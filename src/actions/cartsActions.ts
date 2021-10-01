@@ -48,7 +48,7 @@ export const LoadCartsAction: ActionCreator<ThunkAction<Promise<any>, ICartsStat
   return async (dispatch: Dispatch) => {
     dispatch(loadCartsStarted());
     try {
-      let result = await fetch(`http://127.0.0.1:8000/api/carts/`, {credentials: 'include'});
+      let result = await fetch(`${process.env.REACT_APP_API_URL}/api/carts/`, {credentials: 'include'});
       if (result.status !== 200)
         throw new Error();
       dispatch(loadCartsSuccess(await result.json()));
@@ -62,7 +62,7 @@ export const GetCartAction: ActionCreator<ThunkAction<Promise<any>, ICartsState,
   return async (dispatch: Dispatch) => {
     dispatch(getCartStarted());
     try {
-      let result = await fetch(`http://127.0.0.1:8000/api/carts/${id}/`, {credentials: 'include'});
+      let result = await fetch(`${process.env.REACT_APP_API_URL}/api/carts/${id}/`, {credentials: 'include'});
       if (result.status !== 200)
         throw new Error();
       dispatch(getCartSuccess(await result.json()));

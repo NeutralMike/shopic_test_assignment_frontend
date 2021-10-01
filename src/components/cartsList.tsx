@@ -105,9 +105,9 @@ export default function CartsList() {
             <Table size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell>Promotion</TableCell>
+                  <TableCell align="right">Promotion</TableCell>
                   <TableCell>Product Name</TableCell>
-                  <TableCell>Price</TableCell>
+                  <TableCell align="right">Price</TableCell>
                   <TableCell></TableCell>
                 </TableRow>
               </TableHead>
@@ -116,7 +116,7 @@ export default function CartsList() {
                   <TableRow>
                     <TableCell align="right">{item.discount ? <MonetizationOnOutlinedIcon sx={{color: 'red'}}/> : ''}</TableCell>
                     <TableCell>{item.name}</TableCell>
-                    <TableCell>{(item.price - item.discount * item.price/100).toFixed(2)}</TableCell>
+                    <TableCell align="right">{(item.price - item.discount * item.price/100).toFixed(2)}</TableCell>
                     <TableCell><Button>Remove</Button></TableCell>
                   </TableRow>
                 ))}

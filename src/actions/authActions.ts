@@ -39,7 +39,7 @@ export const LoginAction: ActionCreator<ThunkAction<Promise<any>, ICartsState, n
       formData.append('password', password);
 
       let result = await fetch(
-        `http://127.0.0.1:8000/api/login/`,
+        `${process.env.REACT_APP_API_URL}/api/login/`,
         {
           method: 'POST',
           credentials: 'include',
@@ -59,7 +59,7 @@ export const LoginAction: ActionCreator<ThunkAction<Promise<any>, ICartsState, n
 export const AuthCheckAction: ActionCreator<ThunkAction<Promise<any>, ICartsState, null, IAuthCheckSuccessAction>> = () => {
   return async (dispatch: Dispatch) => {
     try {
-      let result = await fetch(`http://127.0.0.1:8000/api/auth-check/`, {credentials: 'include'});
+      let result = await fetch(`${process.env.REACT_APP_API_URL}/api/auth-check/`, {credentials: 'include'});
       if (result.status !== 200)
         throw new Error();
       dispatch(AuthCheckSuccess());
