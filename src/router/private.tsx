@@ -4,7 +4,7 @@ import { IAppState } from '../store/store';
 
 
 function PrivateRoute({ children, ...rest }: any) {
-  const isAuthed = useSelector((state: IAppState) => state.authState.isAuthed);
+  const isAuthed = useSelector<IAppState, boolean>((state: IAppState) => state.authState.isAuthed);
   
   return (
     <Route

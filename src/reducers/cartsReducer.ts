@@ -1,8 +1,9 @@
 import { Reducer } from 'redux';
 import { LoadCartsTypes, LoadCartsActions, GetCartActions } from '../actions/cartsActions';
+import { ICart } from '../interfaces/ICart';
 
 export interface ICartsState {
-  carts: Array<any>;
+  carts: Array<ICart>;
   loading: boolean;
   errorMessage: string;
 }

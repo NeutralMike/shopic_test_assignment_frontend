@@ -8,7 +8,7 @@ import { IAppState } from './store/store';
 
 
 function App() {
-  const isAuthed = useSelector((state: IAppState) => state.authState.isAuthed);
+  const isAuthed = useSelector<IAppState, boolean>((state: IAppState) => state.authState.isAuthed);
 
   const dispatch = useDispatch();
 
@@ -17,7 +17,8 @@ function App() {
   }, [])
 
   useEffect(() => {
-    dispatch(LoadCartsAction());
+    if (isAuthed)
+      dispatch(LoadCartsAction());
   }, [isAuthed])
 
   return (

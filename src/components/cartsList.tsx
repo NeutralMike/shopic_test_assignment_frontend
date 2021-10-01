@@ -17,17 +17,18 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import MonetizationOnOutlinedIcon from '@mui/icons-material/MonetizationOnOutlined';
 import { GetCartAction } from '../actions/cartsActions';
+import { ICart } from '../interfaces/ICart';
 
 
 
 
 export default function CartsList() {
-  const carts = useSelector<IAppState, Array<any>>((state: IAppState) => state.cartsState.carts);
+  const carts = useSelector<IAppState, Array<ICart>>((state: IAppState) => state.cartsState.carts);
 
   let [appModeFilter, setAppModeFilter] = useState<string>('Any');
   let [statusFilter, setStatusFilter] = useState<string>('Any');
   let [openModalId, setOpenModalId] = useState<number | null>(null);
-  let [modalCart, setModalCart] = useState<any | null>(null);
+  let [modalCart, setModalCart] = useState<ICart | null>(null);
 
   const handleAppModeFilterChange = (event: SelectChangeEvent) => {
     setAppModeFilter(event.target.value as string);
@@ -46,7 +47,7 @@ export default function CartsList() {
 
   useEffect(() => {
     if (openModalId !== null){
-      setModalCart(carts.find(cart => cart.id === openModalId))
+      setModalCart(carts.find(cart => cart.id === openModalId) || null)
     }
   }, [carts])
 

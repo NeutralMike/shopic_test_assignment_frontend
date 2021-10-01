@@ -1,5 +1,6 @@
 import { ActionCreator, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
+import { ICart } from '../interfaces/ICart';
 import { ICartsState } from '../reducers/cartsReducer';
 
 
@@ -14,7 +15,7 @@ export enum LoadCartsTypes {
 
 export interface ILoadCartsSuccessAction {
   type: LoadCartsTypes.LOAD_CARTS_SUCCESS;
-  carts: any;
+  carts: Array<ICart>;
 }
 
 export interface ILoadCartsFailureAction {
@@ -28,7 +29,7 @@ export interface ILoadCartsStartedAction {
 
 export interface IGetCartSuccessAction {
   type: LoadCartsTypes.GET_CART_SUCCESS;
-  cart: any;
+  cart: ICart;
 }
 
 export interface IGetCartFailureAction {
@@ -81,7 +82,7 @@ const loadCartsFailure = (error: string) => ({
   errorMessage: error
 })
 
-const loadCartsSuccess = (carts: Array<any>) => ({
+const loadCartsSuccess = (carts: Array<ICart>) => ({
   type: LoadCartsTypes.LOAD_CARTS_SUCCESS,
   carts: carts
 })
@@ -95,7 +96,7 @@ const getCartFailure = (error: string) => ({
   errorMessage: error
 })
 
-const getCartSuccess = (cart: any) => ({
+const getCartSuccess = (cart: ICart) => ({
   type: LoadCartsTypes.GET_CART_SUCCESS,
   cart: cart
 })
