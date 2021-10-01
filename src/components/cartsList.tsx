@@ -66,29 +66,30 @@ export default function CartsList() {
   return (
     <div>
       <Box display="flex" padding={1}>
-      <p style={{marginRight: 10}}>App Mode:</p>
-      <Select
-        id="app-mode-filter"
-        value={appModeFilter}
-        onChange={handleAppModeFilterChange}
-      >
-        <MenuItem value="Any">Any</MenuItem>
-        {Array.from(new Set(carts.map(cart => cart.app_mode))).map(item => (
-          <MenuItem value={item}>{item}</MenuItem>
-        ))}
-      </Select>
-      <p style={{marginRight: 10, marginLeft: 20}}>Status:</p>
-      <Select
-        id="status-filter"
-        value={statusFilter}
-        onChange={handleStatusFilterChange}
-      >
-        <MenuItem value="Any">Any</MenuItem>
-        {Array.from(new Set(carts.map(cart => cart.status))).map(item => (
-          <MenuItem value={item}>{item}</MenuItem>
-        ))}
-      </Select>
+        <p style={{marginRight: 10}}>App Mode:</p>
+        <Select
+          id="app-mode-filter"
+          value={appModeFilter}
+          onChange={handleAppModeFilterChange}
+        >
+          <MenuItem value="Any">Any</MenuItem>
+          {Array.from(new Set(carts.map(cart => cart.app_mode))).map(item => (
+            <MenuItem value={item}>{item}</MenuItem>
+          ))}
+        </Select>
+        <p style={{marginRight: 10, marginLeft: 20}}>Status:</p>
+        <Select
+          id="status-filter"
+          value={statusFilter}
+          onChange={handleStatusFilterChange}
+        >
+          <MenuItem value="Any">Any</MenuItem>
+          {Array.from(new Set(carts.map(cart => cart.status))).map(item => (
+            <MenuItem value={item}>{item}</MenuItem>
+          ))}
+        </Select>
       </Box>
+
       <Modal
         open={openModalId !== null}
         onClose={() => setOpenModalId(null)}
@@ -126,6 +127,7 @@ export default function CartsList() {
           </TableContainer>
         </Stack>
       </Modal>
+
       <TableContainer component={Paper}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -150,9 +152,9 @@ export default function CartsList() {
                 <TableCell align="right">{cart.app_mode}</TableCell>
                 <TableCell align="right">{cart.status}</TableCell>
                 <TableCell align="right">{cart.items_count}</TableCell>
-                <TableCell align="right">{cart.total_price}</TableCell>
-                <TableCell align="right">{cart.total_price_without_discount}</TableCell>
-                <TableCell align="right">{cart.total_discount}</TableCell>
+                <TableCell align="right">{cart.total_price.toFixed(2)}</TableCell>
+                <TableCell align="right">{cart.total_price_without_discount.toFixed(2)}</TableCell>
+                <TableCell align="right">{cart.total_discount.toFixed(2)}</TableCell>
               </TableRow>
             ))}
           </TableBody>
