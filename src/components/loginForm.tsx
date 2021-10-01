@@ -41,7 +41,7 @@ export default function LoginForm() {
         value={password}
         onChange={e => setPassword(e.target.value)}
       />
-      {errors?.general ? <Typography sx={{color: 'red'}}>{errors.general}</Typography> : ''}
+      {errors?.general ? <Typography variant="caption" sx={{color: 'red'}}>{errors.general}</Typography> : ''}
       <Button type="submit" variant="contained" onClick={() => dispatch(LoginAction(username, password))}>
         Log in
       </Button>
