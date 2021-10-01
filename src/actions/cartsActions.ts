@@ -7,6 +7,9 @@ export enum LoadCartsTypes {
   LOAD_CARTS_SUCCESS = 'LOAD_CARTS_SUCCESS',
   LOAD_CARTS_FAILURE = 'LOAD_CARTS_FAILURE',
   LOAD_CARTS_STARTED = 'LOAD_CARTS_STARTED',
+  GET_CART_SUCCESS = 'GET_CART_SUCCESS',
+  GET_CART_FAILURE = 'GET_CART_FAILURE',
+  GET_CART_STARTED = 'GET_CART_STARTED',
 }
 
 export interface ILoadCartsSuccessAction {
@@ -23,7 +26,23 @@ export interface ILoadCartsStartedAction {
   type: LoadCartsTypes.LOAD_CARTS_STARTED;
 }
 
+export interface IGetCartSuccessAction {
+  type: LoadCartsTypes.GET_CART_SUCCESS;
+  cart: any;
+}
+
+export interface IGetCartFailureAction {
+  type: LoadCartsTypes.GET_CART_FAILURE;
+  errorMessage: string;
+}
+
+export interface IGetCartStartedAction {
+  type: LoadCartsTypes.GET_CART_STARTED;
+}
+
+
 export type LoadCartsActions = ILoadCartsSuccessAction | ILoadCartsFailureAction | ILoadCartsStartedAction;
+export type GetCartActions = IGetCartSuccessAction | IGetCartFailureAction | IGetCartStartedAction;
 
 export const LoadCartsAction: ActionCreator<ThunkAction<Promise<any>, ICartsState, null, ILoadCartsSuccessAction>> = () => {
   return async (dispatch: Dispatch) => {
@@ -35,6 +54,20 @@ export const LoadCartsAction: ActionCreator<ThunkAction<Promise<any>, ICartsStat
       dispatch(loadCartsSuccess(await result.json()));
     } catch (err) {
       dispatch(loadCartsFailure('Error while loading data from server'));
+    };
+  };
+};
+
+export const GetCartAction: ActionCreator<ThunkAction<Promise<any>, ICartsState, null, IGetCartSuccessAction>> = (id: number) => {
+  return async (dispatch: Dispatch) => {
+    dispatch(getCartStarted());
+    try {
+      let result = await fetch(`http://127.0.0.1:8000/api/carts/${id}/`, {credentials: 'include'});
+      if (result.status !== 200)
+        throw new Error();
+      dispatch(getCartSuccess(await result.json()));
+    } catch (err) {
+      dispatch(getCartFailure('Error while loading data from server'));
     };
   };
 };
@@ -51,4 +84,18 @@ const loadCartsFailure = (error: string) => ({
 const loadCartsSuccess = (carts: Array<any>) => ({
   type: LoadCartsTypes.LOAD_CARTS_SUCCESS,
   carts: carts
+})
+
+const getCartStarted = () => ({
+  type: LoadCartsTypes.GET_CART_STARTED
+})
+
+const getCartFailure = (error: string) => ({
+  type: LoadCartsTypes.GET_CART_FAILURE,
+  errorMessage: error
+})
+
+const getCartSuccess = (cart: any) => ({
+  type: LoadCartsTypes.GET_CART_SUCCESS,
+  cart: cart
 })

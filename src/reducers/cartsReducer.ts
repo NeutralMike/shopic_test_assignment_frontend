@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import { LoadCartsTypes, LoadCartsActions } from '../actions/cartsActions';
+import { LoadCartsTypes, LoadCartsActions, GetCartActions } from '../actions/cartsActions';
 
 export interface ICartsState {
   carts: Array<any>;
@@ -13,17 +13,19 @@ const initialCartsState: ICartsState = {
   errorMessage: '',
 };
 
-export const cartsReducer: Reducer<ICartsState, LoadCartsActions> = (
+export const cartsReducer: Reducer<ICartsState, LoadCartsActions | GetCartActions> = (
     state = initialCartsState,
     action
   ) => {
     switch (action.type) {
+      case LoadCartsTypes.GET_CART_STARTED:
       case LoadCartsTypes.LOAD_CARTS_STARTED: {
         return {
           ...state,
           loading: true
         };
       }
+      case LoadCartsTypes.GET_CART_FAILURE:
       case LoadCartsTypes.LOAD_CARTS_FAILURE: {
         return {
           ...state,
@@ -39,6 +41,14 @@ export const cartsReducer: Reducer<ICartsState, LoadCartsActions> = (
           loading: false,
           carts: action.carts
         };
+      }
+      case LoadCartsTypes.GET_CART_SUCCESS: {
+        return {
+          ...state,
+          errorMessage: '',
+          loading: false,
+          carts: state.carts.map(cart => cart.id === action.cart.id ? action.cart : cart)
+        }
       }
       default:
         return state;
