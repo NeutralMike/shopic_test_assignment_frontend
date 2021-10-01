@@ -16,6 +16,7 @@ export interface ILoginSuccessAction {
 
 export interface ILoginFailureAction {
   type: AuthTypes.LOGIN_FAILURE;
+  errors: object
 }
 
 export interface IAuthCheckSuccessAction {
@@ -33,25 +34,24 @@ export type LoginActions = ILoginSuccessAction | ILoginFailureAction;
 
 export const LoginAction: ActionCreator<ThunkAction<Promise<any>, ICartsState, null, ILoginSuccessAction>> = (username: string, password: string) => {
   return async (dispatch: Dispatch) => {
-    try {
-      let formData = new FormData();
-      formData.append('username', username);
-      formData.append('password', password);
+    let formData = new FormData();
+    formData.append('username', username);
+    formData.append('password', password);
 
-      let result = await fetch(
-        `${process.env.REACT_APP_API_URL}/login/`,
-        {
-          method: 'POST',
-          credentials: 'include',
-          body: formData
-        }
-        );
-      if (result.status !== 200)
-        throw new Error();
+    let result = await fetch(
+      `${process.env.REACT_APP_API_URL}/login/`,
+      {
+        method: 'POST',
+        credentials: 'include',
+        body: formData
+      }
+      );
+    if (result.status !== 200){
+      dispatch(loginFailure(await result.json()));
+    }
+    else {
       dispatch(loginSuccess());
-    } catch (err) {
-      dispatch(loginFailure());
-    };
+    }
   };
 };
 
@@ -74,8 +74,9 @@ const loginSuccess = () => ({
   type: AuthTypes.LOGIN_SUCCESS
 })
 
-const loginFailure = () => ({
+const loginFailure = (errors: any) => ({
   type: AuthTypes.LOGIN_FAILURE,
+  errors
 })
 
 const AuthCheckSuccess = () => ({

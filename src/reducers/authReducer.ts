@@ -4,10 +4,16 @@ import { AuthTypes, LoginActions, AuthCheckActions } from '../actions/authAction
 
 export interface IAuthState {
   isAuthed: boolean;
+  errors: any;
 }
 
 const initialAuthState: IAuthState = {
   isAuthed: false,
+  errors: {
+    password: '',
+    username: '',
+    general: '',
+  },
 };
 
 export const authReducer: Reducer<IAuthState, LoginActions | AuthCheckActions> = (
@@ -15,11 +21,24 @@ export const authReducer: Reducer<IAuthState, LoginActions | AuthCheckActions> =
     action
   ) => {
     switch (action.type) {
-      case AuthTypes.AUTH_CHECK_FAILURE:
+      case AuthTypes.AUTH_CHECK_FAILURE: {
+        return {
+          ...state,
+          isAuthed: false,
+        };
+      }
       case AuthTypes.LOGIN_FAILURE: {
         return {
           ...state,
           isAuthed: false,
+          errors: {
+            ...{
+              password: '',
+              username: '',
+              general: '',
+            },
+            ...action.errors
+          },
         };
       }
       case AuthTypes.AUTH_CHECK_SUCCESS:
@@ -27,6 +46,11 @@ export const authReducer: Reducer<IAuthState, LoginActions | AuthCheckActions> =
         return {
           ...state,
           isAuthed: true,
+          errors: {
+            password: '',
+            username: '',
+            general: '',
+          },
         };
       }
       default:
